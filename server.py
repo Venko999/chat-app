@@ -2,32 +2,27 @@ import socket
 from threading import Thread
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_ip = "127.0.0.1"
-port  = 4455
-s.bind((server_ip,port))
-print("Server Is Running On " + server_ip +" "+ str(port))
+host = "89.215.239.140"
+port = 4455
+s.connect((host,port))
+print("Connected To The Server")
 
-s.listen(1)
-conn, addr = s.accept()
-print("Connected")
-print(addr)
-
-class send(Thread):
+class MyThd1(Thread):
     def run(self):
         while True:
-            msg = input("Enter Your message : ")
-            msg = msg.encode()
-            conn.send(msg)
-            print("Your msg is sent. ")
+            s_msg = input("Enter Your Msg : ")
+            s_msg = s_msg.encode()
+            s.send(s_msg)
+            print("sent successfully")
 
-class receive(Thread):
+class MyThd2(Thread):
     def run(self):
         while True:
-            r_msg = conn.recv(1024)
+            r_msg = s.recv(1024)
             r_msg = r_msg.decode()
-            print("received msg : " + r_msg)
-           
-t1 = send()
-t2 = receive()
+            print("Received Msg : " + r_msg)
+
+t1 = MyThd1()
+t2 = MyThd2()
 t1.start()
 t2.start()
