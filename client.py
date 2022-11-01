@@ -2,7 +2,7 @@ import socket
 from threading import Thread
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = "89.215.239.140"
+host = ""
 port = 4455
 s.connect((host,port))
 print("Connected To The Server")
